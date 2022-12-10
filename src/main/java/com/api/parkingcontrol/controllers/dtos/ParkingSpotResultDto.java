@@ -8,13 +8,17 @@ import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class ParkingSpotResultDto {
 
     private UUID id;

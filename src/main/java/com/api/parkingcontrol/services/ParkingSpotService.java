@@ -10,7 +10,7 @@ import com.api.parkingcontrol.controllers.dtos.ParkingSpotResultDto;
 import com.api.parkingcontrol.models.ParkingSpotModel;
 import com.api.parkingcontrol.repositories.ParkingSpotRepository;
 import com.api.parkingcontrol.services.exception.EntidadeEmUsoException;
-import com.api.parkingcontrol.services.exception.EntidadeNaoEncontradoException;
+import com.api.parkingcontrol.services.exception.EntidadeNaoEncontradaException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -33,13 +33,12 @@ public class ParkingSpotService {
 		List<ParkingSpotResultDto> parkingSpotResultDtoList = parkingSpotModel.stream()
 			.map(p -> modelMapper.map(p, ParkingSpotResultDto.class))
 			.collect(Collectors.toList());
-		Page<ParkingSpotResultDto> parkingSpotResultDtoPage = new PageImpl<>(parkingSpotResultDtoList, pageable, parkingSpotModel.getTotalElements());
-		return parkingSpotResultDtoPage;
+		return new PageImpl<>(parkingSpotResultDtoList, pageable, parkingSpotModel.getTotalElements());
 	}
 
 	public ParkingSpotResultDto findById(UUID id) {
 		ParkingSpotModel parkingSpotModel = parkingSpotRepository.findById(id)
-			.orElseThrow(() -> new EntidadeNaoEncontradoException("Local de estacionamento não encontrado!"));
+			.orElseThrow(() -> new EntidadeNaoEncontradaException("Local de estacionamento não encontrado!"));
 		return modelMapper.map(parkingSpotModel, ParkingSpotResultDto.class);
 	}
 
@@ -63,7 +62,7 @@ public class ParkingSpotService {
 	}
 
 	@Transactional
-	public ParkingSpotResultDto atualizar(UUID id, ParkingSpotInputDto parkingSpotInputDto) {
+	public ParkingSpotResultDto update(UUID id, ParkingSpotInputDto parkingSpotInputDto) {
 		ParkingSpotResultDto parkingSpotResultDto = findById(id);
 		modelMapper.map(parkingSpotInputDto, parkingSpotResultDto);
 		var parkingSpotModel = modelMapper.map(parkingSpotResultDto, ParkingSpotModel.class);
@@ -76,7 +75,7 @@ public class ParkingSpotService {
 		try {
 			parkingSpotRepository.deleteById(id);
 		} catch (EmptyResultDataAccessException e) {
-			throw new EntidadeNaoEncontradoException("Local de estacionamento não encontrado!");
+			throw new EntidadeNaoEncontradaException("Local de estacionamento não encontrado!");
 		}
 	}
 

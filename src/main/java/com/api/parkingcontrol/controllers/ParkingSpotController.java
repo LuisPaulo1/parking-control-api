@@ -1,12 +1,12 @@
 package com.api.parkingcontrol.controllers;
 
-import java.net.URI;
 import java.util.UUID;
 import javax.validation.Valid;
 
 import com.api.parkingcontrol.controllers.dtos.ParkingSpotInputDto;
 import com.api.parkingcontrol.controllers.dtos.ParkingSpotResultDto;
 import com.api.parkingcontrol.services.ParkingSpotService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -23,18 +23,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/parking-spot")
 public class ParkingSpotController {
 
-	private final ParkingSpotService parkingSpotService;
-
-	public ParkingSpotController(ParkingSpotService parkingSpotService) {
-		this.parkingSpotService = parkingSpotService;
-	}
+	@Autowired
+	private ParkingSpotService parkingSpotService;
 
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
 	@GetMapping
@@ -54,15 +50,14 @@ public class ParkingSpotController {
 	@PostMapping
 	public ResponseEntity<ParkingSpotResultDto> saveParkingSpot(@RequestBody @Valid ParkingSpotInputDto parkingSpotInputDto) {
 		ParkingSpotResultDto parkingSpotResultDto = parkingSpotService.save(parkingSpotInputDto);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(parkingSpotResultDto.getId()).toUri();
-		return ResponseEntity.created(uri).body(parkingSpotResultDto);
+		return ResponseEntity.status(HttpStatus.CREATED).body(parkingSpotResultDto);
 	}
 
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PutMapping("/{id}")
 	public ResponseEntity<ParkingSpotResultDto> updateParkingSpot(@PathVariable(value = "id") UUID id,
 		@RequestBody @Valid ParkingSpotInputDto parkingSpotInputDto) {
-		ParkingSpotResultDto parkingSpotResultDto = parkingSpotService.atualizar(id, parkingSpotInputDto);
+		ParkingSpotResultDto parkingSpotResultDto = parkingSpotService.update(id, parkingSpotInputDto);
 		return ResponseEntity.status(HttpStatus.OK).body(parkingSpotResultDto);
 	}
 

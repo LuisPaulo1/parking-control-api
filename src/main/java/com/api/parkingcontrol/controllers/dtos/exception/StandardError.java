@@ -1,4 +1,4 @@
-package com.api.parkingcontrol.controllers.exception;
+package com.api.parkingcontrol.controllers.dtos.exception;
 import java.io.Serializable;
 import java.time.Instant;
 

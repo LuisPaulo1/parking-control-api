@@ -3,9 +3,9 @@ package com.api.parkingcontrol.services.exception;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-public class EntidadeNaoEncontradoException extends RuntimeException {
+public class EntidadeNaoEncontradaException extends RuntimeException {
 
-	public EntidadeNaoEncontradoException(String msg){
+	public EntidadeNaoEncontradaException(String msg){
 		super(msg);
 	}
 }
