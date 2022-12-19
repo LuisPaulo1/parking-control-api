@@ -12,10 +12,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 
 import com.api.parkingcontrol.enums.RoleName;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "TB_ROLE")
 public class RoleModel implements GrantedAuthority, Serializable {
@@ -33,21 +40,5 @@ public class RoleModel implements GrantedAuthority, Serializable {
 	@Override
 	public String getAuthority() {
 		return this.roleName.toString();
-	}
-
-	public UUID getRoleId() {
-		return roleId;
-	}
-
-	public void setRoleId(UUID roleId) {
-		this.roleId = roleId;
-	}
-
-	public RoleName getRoleName() {
-		return roleName;
-	}
-
-	public void setRoleName(RoleName roleName) {
-		this.roleName = roleName;
 	}
 }

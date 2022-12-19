@@ -1,4 +1,4 @@
-package com.api.parkingcontrol.controllers.dtos.exception;
+package com.api.parkingcontrol.controllers.exception;
 
 import java.time.Instant;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class ResourceExceptionHandler {
 	
 	@ExceptionHandler(EntidadeEmUsoException.class)
-	public ResponseEntity<StandardError> handleResourceNotFound(EntidadeEmUsoException e, HttpServletRequest request) {
+	public ResponseEntity<StandardError> handleEntidadeEmUso(EntidadeEmUsoException e, HttpServletRequest request) {
 		HttpStatus status = HttpStatus.CONFLICT;
 		StandardError err = new StandardError();
 		err.setTimestamp(Instant.now());
@@ -29,7 +29,7 @@ public class ResourceExceptionHandler {
 	}
 
 	@ExceptionHandler(EntidadeNaoEncontradaException.class)
-	public ResponseEntity<StandardError> handleResourceNotFound(EntidadeNaoEncontradaException e, HttpServletRequest request) {
+	public ResponseEntity<StandardError> handleEntidadeNaoEncontrada(EntidadeNaoEncontradaException e, HttpServletRequest request) {
 		HttpStatus status = HttpStatus.NOT_FOUND;
 		StandardError err = new StandardError();
 		err.setTimestamp(Instant.now());
@@ -41,7 +41,7 @@ public class ResourceExceptionHandler {
 	}
 
 	@ExceptionHandler(AccessDeniedException.class)
-	public ResponseEntity<StandardError> acessoNegado(Exception e, HttpServletRequest request) {
+	public ResponseEntity<StandardError> handleAccessDenied(AccessDeniedException e, HttpServletRequest request) {
 		HttpStatus status = HttpStatus.FORBIDDEN;
 		StandardError err = new StandardError();
 		err.setTimestamp(Instant.now());
@@ -53,7 +53,7 @@ public class ResourceExceptionHandler {
 	}
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<ValidationError> validation(MethodArgumentNotValidException e, HttpServletRequest request) {
+	public ResponseEntity<ValidationError> handleMethodArgumentNotValid(MethodArgumentNotValidException e, HttpServletRequest request) {
 		HttpStatus status = HttpStatus.BAD_REQUEST;
 		ValidationError err = new ValidationError();
 		err.setTimestamp(Instant.now());
@@ -68,7 +68,7 @@ public class ResourceExceptionHandler {
 	}
 
 	@ExceptionHandler(Exception.class)
-	public ResponseEntity<StandardError> erroDeSistema(Exception e, HttpServletRequest request) {
+	public ResponseEntity<StandardError> handleErroDeSistema(Exception e, HttpServletRequest request) {
 		HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
 		StandardError err = new StandardError();
 		err.setTimestamp(Instant.now());

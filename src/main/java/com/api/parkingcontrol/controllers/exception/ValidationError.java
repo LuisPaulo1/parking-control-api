@@ -1,4 +1,4 @@
-package com.api.parkingcontrol.controllers.dtos.exception;
+package com.api.parkingcontrol.controllers.exception;
 
 import java.util.ArrayList;
 import java.util.List;

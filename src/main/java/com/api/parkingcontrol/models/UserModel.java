@@ -15,9 +15,14 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "TB_USER")
 public class UserModel implements UserDetails, Serializable {
@@ -39,22 +44,6 @@ public class UserModel implements UserDetails, Serializable {
 		joinColumns = @JoinColumn(name = "user_id"),
 	    inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private List<RoleModel> roles;
-
-	public UUID getUserId() {
-		return userId;
-	}
-	
-	public void setUserId(UUID userId) {
-		this.userId = userId;
-	}
-	
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {		
