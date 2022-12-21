@@ -9,7 +9,6 @@ import com.api.parkingcontrol.controllers.dtos.ParkingSpotInputDto;
 import com.api.parkingcontrol.controllers.dtos.ParkingSpotResultDto;
 import com.api.parkingcontrol.models.ParkingSpotModel;
 import com.api.parkingcontrol.repositories.ParkingSpotRepository;
-import com.api.parkingcontrol.services.exception.EntidadeEmUsoException;
 import com.api.parkingcontrol.services.exception.EntidadeNaoEncontradaException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 @Service
 public class ParkingSpotService {
 
@@ -44,17 +42,6 @@ public class ParkingSpotService {
 
 	@Transactional
 	public ParkingSpotResultDto save(ParkingSpotInputDto parkingSpotInputDto) {
-
-		if (existsByLicensePlateCar(parkingSpotInputDto.getLicensePlateCar())) {
-			throw new EntidadeEmUsoException("A licença da placa do carro já está em uso!");
-		}
-		if (existsByParkingSpotNumber(parkingSpotInputDto.getParkingSpotNumber())) {
-			throw new EntidadeEmUsoException("A vaga de estacionamento já está em uso!");
-		}
-		if (existsByApartmentAndBlock(parkingSpotInputDto.getApartment(), parkingSpotInputDto.getBlock())) {
-			throw new EntidadeEmUsoException("Vaga de estacionamento já cadastrada para este apartamento/bloco!");
-		}
-
 		var parkingSpotModel = modelMapper.map(parkingSpotInputDto, ParkingSpotModel.class);
 		parkingSpotModel = parkingSpotRepository.save(parkingSpotModel);
 
@@ -77,17 +64,5 @@ public class ParkingSpotService {
 		} catch (EmptyResultDataAccessException e) {
 			throw new EntidadeNaoEncontradaException("Local de estacionamento não encontrado!");
 		}
-	}
-
-	private boolean existsByLicensePlateCar(String licensePlateCar) {
-		return parkingSpotRepository.existsByLicensePlateCar(licensePlateCar);
-	}
-
-	private boolean existsByParkingSpotNumber(String parkingSpotNumber) {
-		return parkingSpotRepository.existsByParkingSpotNumber(parkingSpotNumber);
-	}
-
-	private boolean existsByApartmentAndBlock(String apartment, String block) {
-		return parkingSpotRepository.existsByApartmentAndBlock(apartment, block);
 	}
 }

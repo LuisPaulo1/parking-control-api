@@ -22,4 +22,4 @@ INSERT INTO tb_users_roles (user_id, role_id) values('46d9819a-597f-45a3-9756-64
 
 INSERT INTO tb_parking_spot (
     id, apartment, block, brand_car, color_car, criation_date, license_plate_car, model_car, parking_spot_number, responsible_name, update_date)
-VALUES ('932eda96-638b-4cad-af31-3a4f91fc3a5e', '202', 'D', 'audi', 'red', current_timestamp, 'RRS8562', 'q5', '205B', 'Maria', current_timestamp);
+VALUES ('932eda96-638b-4cad-af31-3a4f91fc3a5e', '202', 'D', 'audi', 'red', current_timestamp, 'RRS8562', 'q5', '205B', 'Bruna', current_timestamp);

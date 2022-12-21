@@ -171,7 +171,7 @@ public class ParkingSpotControllerIT {
 	}
 
 	@Test
-	public void saveParkingSpotDeveriaRetornarStatusConflictQuandoCampoLicensePlateCarEstiverCadastrado() throws Exception {
+	public void saveParkingSpotDeveriaRetornarStatusBadRequestQuandoCampoLicensePlateCarEstiverCadastrado() throws Exception {
 
 		ParkingSpotInputDto parkingSpotInputDto = new ParkingSpotInputDto("44AD", "RRS8562", "Fiat", "cvb", "preto", "Carlos", "300", "G");
 		String jsonBody = objectMapper.writeValueAsString(parkingSpotInputDto);
@@ -183,11 +183,11 @@ public class ParkingSpotControllerIT {
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON));
 
-		result.andExpect(status().isConflict());
+		result.andExpect(status().isBadRequest());
 	}
 
 	@Test
-	public void saveParkingSpotDeveriaRetornarStatusConflictQuandoCampoParkingSpotNumberEstiverCadastrado() throws Exception {
+	public void saveParkingSpotDeveriaRetornarStatusBadRequestQuandoCampoParkingSpotNumberEstiverCadastrado() throws Exception {
 
 		ParkingSpotInputDto parkingSpotInputDto = new ParkingSpotInputDto("205B", "ABC8123", "Fiat", "cvb", "preto", "Carlos", "300", "G");
 		String jsonBody = objectMapper.writeValueAsString(parkingSpotInputDto);
@@ -199,7 +199,7 @@ public class ParkingSpotControllerIT {
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON));
 
-		result.andExpect(status().isConflict());
+		result.andExpect(status().isBadRequest());
 	}
 
 	@Test

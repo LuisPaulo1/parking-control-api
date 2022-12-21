@@ -3,15 +3,18 @@ package com.api.parkingcontrol.controllers.dtos;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import com.api.parkingcontrol.services.validation.ParkingSpotValid;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.validation.annotation.Validated;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ParkingSpotValid
 public class ParkingSpotInputDto {
 
     @NotBlank

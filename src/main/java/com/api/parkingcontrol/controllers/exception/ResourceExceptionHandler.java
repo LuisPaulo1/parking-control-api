@@ -47,7 +47,7 @@ public class ResourceExceptionHandler {
 		err.setTimestamp(Instant.now());
 		err.setStatus(status.value());
 		err.setError("Acesso negado");
-		err.setMessage("O usuário não tem permissão para acessar o recurso");
+		err.setMessage(e.getMessage());
 		err.setPath(request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
 	}
@@ -74,7 +74,7 @@ public class ResourceExceptionHandler {
 		err.setTimestamp(Instant.now());
 		err.setStatus(status.value());
 		err.setError("Erro de sistema");
-		err.setMessage("Ocorreu um erro interno inesperado no sistema");
+		err.setMessage(e.getMessage());
 		err.setPath(request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
 	}
