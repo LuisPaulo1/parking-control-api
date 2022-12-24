@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+  parking-control-api:
+    image:  csluispaulo/parking-control-api
+    container_name: parking-control
+    restart: always
+    environment:
+      DB_HOST: postgres
+    ports:
+      - "8080:8080"
+    networks:
+      - parking-network
+    depends_on:
+      - postgres
+   
+  postgres:
+    image: postgres:15-alpine
+    container_name: db_parking-control
+    restart: always
+    environment:
+      POSTGRES_DB: "parking-control-db"
+      POSTGRES_PASSWORD: "root"
+    ports:
+      - "5432:5432"
+    networks:
+      - parking-network
+
+networks:
+  parking-network:
+    driver: bridge
