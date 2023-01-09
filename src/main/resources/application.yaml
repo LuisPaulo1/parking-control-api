@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://${DB_HOST:localhost:5432}/parking-control-db?createDatabaseIfNotExist=true
+    url: jdbc:postgresql://${DB_HOST:localhost:5432}/parking-control-db
     username: postgres
     password: root
 
